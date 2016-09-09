@@ -336,22 +336,6 @@ textarea {
 /*--------------------------------------------------------------
 # Navigation
 --------------------------------------------------------------*/
-.menu {
-    display: table;
-    width: 100%;
-    padding: 0;
-    margin: 0;
-}
-
-.menu > li {
-    display: table-cell;
-    padding: 0;
-    margin: 0;
-}
-
-.current-menu-item {
-    background: red;
-}
 
 /*--------------------------------------------------------------
 ## Links
