@@ -13,6 +13,12 @@
         <?php the_post_thumbnail('thumbnail'); ?>
         
         <?php the_content(); ?>
+        
+        <hr>
+        
+        <p>Categories: <?php the_category(', '); ?></p>
+         
+         <?php comments_template(); ?>
         </article>
         
     <?php endwhile; else : ?>
