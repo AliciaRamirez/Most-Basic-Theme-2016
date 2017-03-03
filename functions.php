@@ -105,3 +105,20 @@ function assignment1_scripts() {
 }
 add_action( 'wp_enqueue_scripts', 'assignment1_scripts' );
 
+/**
+* My shortcode 
+*/
+
+function most_basic_hello_world($attr, $content) {
+    $name = sanitize_text_field($attr['name']);
+    $content = sanitize_text_field($content);
+//    if(is_user_logged_in()) {
+//        $user = get_currentuserinfo();
+//        $name = $user->display_name;
+//    }
+    return "<h1 class='greeting'>Hello $name! $content</h1>";
+}
+
+add_shortcode('helloworld', 'most_basic_hello_world');
+
+
