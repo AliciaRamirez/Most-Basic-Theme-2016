@@ -121,4 +121,91 @@ function most_basic_hello_world($attr, $content) {
 
 add_shortcode('helloworld', 'most_basic_hello_world');
 
+function my_theme_add_svg($attr, $content) {
+    return '
+<svg width="247px" height="202px" viewBox="0 0 247 202" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" style="background: #FFFFFF;">
+    <!-- Generator: Sketch 46.2 (44496) - http://www.bohemiancoding.com/sketch -->
+    <title>Artboard</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <rect id="path-1" x="168" y="138" width="69" height="54"></rect>
+        <rect id="path-2" x="89" y="138" width="69" height="54"></rect>
+        <rect id="path-3" x="10" y="138" width="69" height="54"></rect>
+        <rect id="path-4" x="168" y="74" width="69" height="54"></rect>
+        <rect id="path-5" x="89" y="74" width="69" height="54"></rect>
+        <rect id="path-6" x="10" y="74" width="69" height="54"></rect>
+        <rect id="path-7" x="168" y="10" width="69" height="54"></rect>
+        <rect id="path-8" x="89" y="10" width="69" height="54"></rect>
+        <rect id="path-9" x="10" y="10" width="69" height="54"></rect>
+    </defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Artboard">
+            <g id="r9">
+                <use fill="#D8D8D8" fill-rule="evenodd" xlink:href="#path-1"></use>
+                <rect stroke="#979797" stroke-width="1" x="168.5" y="138.5" width="68" height="53"></rect>
+            </g>
+            <g id="r8">
+                <use fill="#D8D8D8" fill-rule="evenodd" xlink:href="#path-2"></use>
+                <rect stroke="#979797" stroke-width="1" x="89.5" y="138.5" width="68" height="53"></rect>
+            </g>
+            <g id="r7">
+                <use fill="#D8D8D8" fill-rule="evenodd" xlink:href="#path-3"></use>
+                <rect stroke="#979797" stroke-width="1" x="10.5" y="138.5" width="68" height="53"></rect>
+            </g>
+            <g id="r6">
+                <use fill="#D8D8D8" fill-rule="evenodd" xlink:href="#path-4"></use>
+                <rect stroke="#979797" stroke-width="1" x="168.5" y="74.5" width="68" height="53"></rect>
+            </g>
+            <g id="r5">
+                <use fill="#D8D8D8" fill-rule="evenodd" xlink:href="#path-5"></use>
+                <rect stroke="#979797" stroke-width="1" x="89.5" y="74.5" width="68" height="53"></rect>
+            </g>
+            <g id="r4">
+                <use fill="#D8D8D8" fill-rule="evenodd" xlink:href="#path-6"></use>
+                <rect stroke="#979797" stroke-width="1" x="10.5" y="74.5" width="68" height="53"></rect>
+            </g>
+            <g id="r3">
+                <use fill="#D8D8D8" fill-rule="evenodd" xlink:href="#path-7"></use>
+                <rect stroke="#979797" stroke-width="1" x="168.5" y="10.5" width="68" height="53"></rect>
+            </g>
+            <g id="r2">
+                <use fill="#D8D8D8" fill-rule="evenodd" xlink:href="#path-8"></use>
+                <rect stroke="#979797" stroke-width="1" x="89.5" y="10.5" width="68" height="53"></rect>
+            </g>
+            <g id="r1">
+                <use fill="#D8D8D8" fill-rule="evenodd" xlink:href="#path-9"></use>
+                <rect stroke="#979797" stroke-width="1" x="10.5" y="10.5" width="68" height="53"></rect>
+            </g>
+        </g>
+    </g>
+</svg>';
+}
 
+add_shortcode('add_svg', 'my_theme_add_svg');
+
+
+function mytheme_load_scripts() {
+    $taken = [];
+    $key = 'booth';
+    global $wp_query, $post;
+ 
+    $loopTaken = new WP_Query( array(
+        'posts_per_page'  => -1,
+        'post_status'    => 'publish',
+        'category_name'  => 'svg'
+        )
+    );
+ 
+    while( $loopTaken->have_posts() ) {
+        $loopTaken->the_post();
+        $taken[] = wp_strip_all_tags( get_post_meta( $post->ID, $key, true ) );
+    }
+ 
+    wp_enqueue_script('floormap-script', get_stylesheet_directory_uri() . '/js/floormap.js', array('jquery'), "0.59", true);
+ 
+    wp_localize_script('floormap-script', 'floormap_vars', array(
+        'takenBooths' => $taken
+        )
+    );
+}
+add_action('wp_enqueue_scripts', 'mytheme_load_scripts');
