@@ -22,8 +22,6 @@
     
     <div class="row">
         <div class="cute-12-tablet">
-           <nav class="main-navigation">
             <?php wp_nav_menu(); //Main navigation ?>
-            </nav>
         </div>
     </div>
